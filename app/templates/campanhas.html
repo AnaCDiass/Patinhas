@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Campanhas | Patinhas{% endblock %}
+
+{% block content %}
+<div class="jumbotron text-center">
+  <h2 class="display-4">
+    <span class="title-icon">📣</span> Campanhas Ativas
+  </h2>
+  <p class="lead">Ajude a divulgar e participar das campanhas em andamento!</p>
+</div>
+
+<div class="row">
+  {% for campanha in campanhas %}
+    <div class="col-md-6 mb-4">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">{{ campanha.titulo }}</h5>
+          <p class="card-text">{{ campanha.descricao }}</p>
+          <p>
+            <strong>Início:</strong> {{ campanha.data_inicio|date:"d/m/Y" }}<br />
+            <strong>Término:</strong> {{ campanha.data_fim|date:"d/m/Y" }}<br />
+            <strong>ONG:</strong> {{ campanha.ong.nome }}
+          </p>
+        </div>
+      </div>
+    </div>
+  {% empty %}
+    <p class="text-center w-100">Nenhuma campanha disponível no momento.</p>
+  {% endfor %}
+</div>
+{% endblock %}

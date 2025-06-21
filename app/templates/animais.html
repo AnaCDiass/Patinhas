@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}Animais para Adoção | Patinhas{% endblock %}
+
+{% block content %}
+<div class="container mt-5 mb-5">
+  <div class="jumbotron text-center">
+    <h2 class="display-4">
+      <span class="title-icon">🐕</span> Nossos Amigos disponíveis para adoção 🐾
+    </h2>
+    <p class="lead">
+      Escolha seu novo melhor amigo e dê a ele um lar cheio de amor!
+    </p>
+  </div>
+
+  <div class="row">
+    {% for animal in animais %}
+      <div class="col-md-4 mb-4">
+        <div class="card shadow-sm">
+          {% if animal.imagem %}
+            <img src="{{ animal.imagem.url }}" alt="Foto de {{ animal.nome }}" class="card-img-top" />
+          {% endif %}
+          <div class="card-body text-center">
+            <h5 class="card-title">{{ animal.nome }}</h5>
+            <p class="card-text">
+              <strong>Espécie:</strong> {{ animal.especie }}<br>
+              <strong>Raça:</strong> {{ animal.raca }}<br>
+              <strong>Idade:</strong> {{ animal.idade }}<br>
+              <strong>Sexo:</strong> {{ animal.sexo }}<br>
+              <strong>Status:</strong> 
+              <span class="{% if animal.status == 'Disponível' %}text-success{% else %}text-danger{% endif %}">
+                {{ animal.status }}
+              </span>
+            </p>
+            <a href="{% url 'detalhes_animal' animal.id %}" class="btn btn-success btn-block mt-3">
+              Quero Adotar
+            </a>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <p class="text-center w-100">Nenhum animalzinho disponível no momento 😿</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

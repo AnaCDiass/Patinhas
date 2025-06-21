@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Contato | Patinhas{% endblock %}
+
+{% block content %}
+<div class="form-container bg-white p-4 shadow rounded mx-auto" style="max-width: 600px;">
+  <h1 class="titulo text-center text-success mb-4">Fale Conosco</h1>
+  <form action="#" method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="nome">Nome:</label>
+      <input type="text" class="form-control" id="nome" name="nome" placeholder="Seu nome" required />
+    </div>
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" class="form-control" id="email" name="email" placeholder="Seu email" required />
+    </div>
+    <div class="form-group">
+      <label for="assunto">Assunto:</label>
+      <input type="text" class="form-control" id="assunto" name="assunto" placeholder="Assunto da mensagem" required />
+    </div>
+    <div class="form-group">
+      <label for="mensagem">Mensagem:</label>
+      <textarea class="form-control" id="mensagem" name="mensagem" rows="5" placeholder="Escreva sua mensagem aqui..." required></textarea>
+    </div>
+    <button type="submit" class="btn btn-success btn-block">Enviar</button>
+  </form>
+</div>
+{% endblock %}
