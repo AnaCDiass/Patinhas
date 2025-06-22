@@ -26,20 +26,6 @@ class Endereco(models.Model):
         verbose_name_plural = "Endereços"
 
 
-class ONG(models.Model):
-    nome = models.CharField(max_length=100, verbose_name="Nome da ONG")
-    email = models.EmailField(verbose_name="Email da ONG")
-    telefone = models.CharField(max_length=15, verbose_name="Telefone")
-    endereco = models.ForeignKey(Endereco, on_delete=models.CASCADE, verbose_name="Endereço da ONG")
-
-    def __str__(self):
-        return self.nome
-
-    class Meta:
-        verbose_name = "ONG"
-        verbose_name_plural = "ONGs"
-
-
 class Veterinario(models.Model):
     nome = models.CharField(max_length=100, verbose_name="Nome do veterinário")
     crmv = models.CharField(max_length=20, verbose_name="CRMV")
@@ -66,7 +52,6 @@ class Animal(models.Model):
         default='Disponível',
         verbose_name="Status"
     )
-    ong = models.ForeignKey(ONG, on_delete=models.CASCADE, verbose_name="ONG responsável")
 
     def __str__(self):
         return self.nome
@@ -105,24 +90,22 @@ class Adocao(models.Model):
 
 
 class Doacao(models.Model):
-    nome_doador = models.CharField(max_length=100, verbose_name="Nome do doador")
+    nome_doador = models.CharField(max_length=100, verbose_name="Nome do doador", blank=True, null=True)
     email = models.EmailField(verbose_name="Email", blank=True, null=True)
     telefone = models.CharField(max_length=15, verbose_name="Telefone", blank=True, null=True)
     valor = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Valor")
     forma_pagamento = models.CharField(max_length=50, verbose_name="Forma de pagamento")
-    data = models.DateField(auto_now_add=True, verbose_name="Data da doação")
-    ong = models.ForeignKey(ONG, on_delete=models.CASCADE, verbose_name="ONG que recebeu", blank=True, null=True)
+    data = models.DateTimeField(auto_now_add=True, verbose_name="Data da doação")
 
     def __str__(self):
-        return f"Doação de {self.nome_doador} - R${self.valor}"
-    
+        return f"R${self.valor:.2f} - {self.forma_pagamento}"
+
 
 class Campanha(models.Model):
     titulo = models.CharField(max_length=100, verbose_name="Título da campanha")
     descricao = models.TextField(verbose_name="Descrição")
     data_inicio = models.DateField(verbose_name="Data de início")
     data_fim = models.DateField(verbose_name="Data de término")
-    ong = models.ForeignKey(ONG, on_delete=models.CASCADE, verbose_name="ONG responsável")
 
     def __str__(self):
         return self.titulo
@@ -137,7 +120,6 @@ class Voluntario(models.Model):
     email = models.EmailField(verbose_name="Email")
     telefone = models.CharField(max_length=15, verbose_name="Telefone")
     cpf = models.CharField(max_length=11, unique=True, verbose_name="CPF")
-    ong = models.ForeignKey(ONG, on_delete=models.CASCADE, verbose_name="ONG que participa")
 
     def __str__(self):
         return self.nome
@@ -153,7 +135,7 @@ class Denuncia(models.Model):
     telefone = models.CharField(max_length=15, verbose_name="Telefone", blank=True, null=True)
     descricao = models.TextField(verbose_name="Descrição da denúncia")
     data = models.DateField(auto_now_add=True, verbose_name="Data da denúncia")
-    ong = models.ForeignKey(ONG, on_delete=models.CASCADE, verbose_name="ONG responsável")
+    endereco = models.ForeignKey(Endereco, on_delete=models.SET_NULL, blank=True, null=True, verbose_name="Endereço")
 
     def __str__(self):
         return f"Denúncia de {self.nome_denunciante} em {self.data}"

@@ -1,15 +1,15 @@
 {% extends 'base.html' %}
 
-{% block title %}Animais para Adoção | Patinhas{% endblock %}
+{% block title %}Registros de Animais | Patinhas{% endblock %}
 
 {% block content %}
 <div class="container mt-5 mb-5">
   <div class="jumbotron text-center">
     <h2 class="display-4">
-      <span class="title-icon">🐕</span> Nossos Amigos disponíveis para adoção 🐾
+      <span class="title-icon">📋</span> Registros de Animais da ONG 🐾
     </h2>
     <p class="lead">
-      Escolha seu novo melhor amigo e dê a ele um lar cheio de amor!
+      Acompanhe aqui todos os animais já acolhidos, em tratamento, adotados ou ainda disponíveis.
     </p>
   </div>
 
@@ -28,18 +28,15 @@
               <strong>Idade:</strong> {{ animal.idade }}<br>
               <strong>Sexo:</strong> {{ animal.sexo }}<br>
               <strong>Status:</strong> 
-              <span class="{% if animal.status == 'Disponível' %}text-success{% else %}text-danger{% endif %}">
+              <span class="{% if animal.status == 'Disponível' %}text-success{% else %}text-secondary{% endif %}">
                 {{ animal.status }}
               </span>
             </p>
-            <button class="btn btn-success btn-block mt-3" disabled></button>
-              Quero Adotar
-            </a>
           </div>
         </div>
       </div>
     {% empty %}
-      <p class="text-center w-100">Nenhum animalzinho disponível no momento 😿</p>
+      <p class="text-center w-100">Nenhum registro de animal foi encontrado no momento.</p>
     {% endfor %}
   </div>
 </div>

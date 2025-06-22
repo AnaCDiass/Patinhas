@@ -3,7 +3,6 @@ from .models import *
 
 admin.site.register(Cidade)
 admin.site.register(Endereco)
-admin.site.register(ONG)
 admin.site.register(Veterinario)
 admin.site.register(Animal)
 admin.site.register(Adotante)
