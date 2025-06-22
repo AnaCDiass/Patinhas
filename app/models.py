@@ -56,7 +56,7 @@ class Veterinario(models.Model):
 
 class Animal(models.Model):
     nome = models.CharField(max_length=100, verbose_name="Nome do animal")
-    especie = models.CharField(max_length=50, verbose_name="Espécie")
+    tipo = models.CharField(max_length=50, verbose_name="Tipo")
     raca = models.CharField(max_length=50, verbose_name="Raça")
     idade = models.IntegerField(verbose_name="Idade (em anos)")
     sexo = models.CharField(max_length=10, verbose_name="Sexo")
