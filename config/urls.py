@@ -13,10 +13,10 @@ urlpatterns = [
     # Parte pública
     path('animais/', AnimaisView.as_view(), name='animais'),
     path('campanhas/', CampanhasView.as_view(), name='campanhas'),
-    path('denuncia/', DenunciaView.as_view(), name='denuncia'),
+    path('denuncias/', DenunciaView.as_view(), name='denuncias'),
     path('doacao/', DoacaoView.as_view(), name='doacao'),
     path('cidades/', CidadesView.as_view(), name='cidades'),
-    
+    path('enderecos/', EnderecosView.as_view(), name='enderecos'),
 
     # Parte privada (se for usar depois)
     # path('painel/', DashboardView.as_view(), name='dashboard'),

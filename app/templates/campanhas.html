@@ -7,7 +7,7 @@
   <h2 class="display-4">
     <span class="title-icon">📣</span> Campanhas
   </h2>
-  <p class="lead">Confira todas as campanhas da ONG, ativas, futuras e encerradas.</p>
+  <p class="lead">Confira todas as campanhas ativas, futuras e encerradas.</p>
 </div>
 
 <div class="row">
@@ -19,8 +19,7 @@
           <p class="card-text">{{ campanha.descricao }}</p>
           <p>
             <strong>Início:</strong> {{ campanha.data_inicio|date:"d/m/Y" }}<br />
-            <strong>Término:</strong> {{ campanha.data_fim|date:"d/m/Y" }}<br />
-            <strong>ONG:</strong> {{ campanha.ong.nome }}
+            <strong>Término:</strong> {{ campanha.data_fim|date:"d/m/Y" }}
           </p>
         </div>
       </div>
