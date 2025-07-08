@@ -26,20 +26,6 @@ class Endereco(models.Model):
         verbose_name_plural = "Endereços"
 
 
-class Veterinario(models.Model):
-    nome = models.CharField(max_length=100, verbose_name="Nome do veterinário")
-    crmv = models.CharField(max_length=20, verbose_name="CRMV")
-    telefone = models.CharField(max_length=15, verbose_name="Telefone")
-    cidade = models.ForeignKey(Cidade, on_delete=models.CASCADE, verbose_name="Cidade")
-
-    def __str__(self):
-        return self.nome
-
-    class Meta:
-        verbose_name = "Veterinário"
-        verbose_name_plural = "Veterinários"
-
-
 class Animal(models.Model):
     nome = models.CharField(max_length=100, verbose_name="Nome do animal")
     tipo = models.CharField(max_length=50, verbose_name="Tipo")
@@ -61,28 +47,13 @@ class Animal(models.Model):
         verbose_name_plural = "Animais"
 
 
-class Adotante(models.Model):
-    nome = models.CharField(max_length=100, verbose_name="Nome do adotante")
-    email = models.EmailField(verbose_name="Email")
-    telefone = models.CharField(max_length=15, verbose_name="Telefone")
-    cpf = models.CharField(max_length=11, unique=True, verbose_name="CPF")
-    cidade = models.ForeignKey(Cidade, on_delete=models.CASCADE, verbose_name="Cidade")
-
-    def __str__(self):
-        return self.nome
-
-    class Meta:
-        verbose_name = "Adotante"
-        verbose_name_plural = "Adotantes"
-
-
 class Adocao(models.Model):
     animal = models.ForeignKey(Animal, on_delete=models.CASCADE, verbose_name="Animal adotado")
-    adotante = models.ForeignKey(Adotante, on_delete=models.CASCADE, verbose_name="Adotante")
+    pessoa = models.ForeignKey('Pessoa', on_delete=models.CASCADE, verbose_name="Adotante")
     data = models.DateField(verbose_name="Data da adoção")
 
     def __str__(self):
-        return f"{self.animal} adotado por {self.adotante}"
+        return f"{self.animal} adotado por {self.pessoa}"
 
     class Meta:
         verbose_name = "Adoção"
@@ -115,20 +86,6 @@ class Campanha(models.Model):
         verbose_name_plural = "Campanhas"
 
 
-class Voluntario(models.Model):
-    nome = models.CharField(max_length=100, verbose_name="Nome do voluntário")
-    email = models.EmailField(verbose_name="Email")
-    telefone = models.CharField(max_length=15, verbose_name="Telefone")
-    cpf = models.CharField(max_length=11, unique=True, verbose_name="CPF")
-
-    def __str__(self):
-        return self.nome
-
-    class Meta:
-        verbose_name = "Voluntário"
-        verbose_name_plural = "Voluntários"
-
-
 class Denuncia(models.Model):
     nome_denunciante = models.CharField(max_length=100, verbose_name="Nome do denunciante")
     email = models.EmailField(verbose_name="Email", blank=True, null=True)
@@ -143,7 +100,7 @@ class Denuncia(models.Model):
 
 class SaudeAnimal(models.Model):
     animal = models.ForeignKey(Animal, on_delete=models.CASCADE, verbose_name="Animal")
-    veterinario = models.ForeignKey(Veterinario, on_delete=models.CASCADE, verbose_name="Veterinário")
+    pessoa = models.ForeignKey('Pessoa', on_delete=models.CASCADE, verbose_name="Veterinário")
     data = models.DateField(verbose_name="Data do atendimento")
     observacoes = models.TextField(verbose_name="Observações")
 
@@ -153,3 +110,44 @@ class SaudeAnimal(models.Model):
     class Meta:
         verbose_name = "Ficha de Saúde"
         verbose_name_plural = "Fichas de Saúde"
+
+
+class Ocupacao(models.Model):
+    nome = models.CharField(max_length=50, unique=True, verbose_name="Nome da Ocupação")
+
+    def __str__(self):
+        return self.nome
+
+    class Meta:
+        verbose_name = "Ocupação"
+        verbose_name_plural = "Ocupações"
+
+
+class Pessoa(models.Model):
+    nome = models.CharField(max_length=100, verbose_name="Nome")
+    email = models.EmailField(verbose_name="Email")
+    telefone = models.CharField(max_length=15, verbose_name="Telefone")
+    cpf = models.CharField(max_length=11, unique=True, verbose_name="CPF")
+    cidade = models.ForeignKey(Cidade, on_delete=models.CASCADE, verbose_name="Cidade")
+    ocupacao = models.ForeignKey(Ocupacao, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Ocupação")
+
+    def __str__(self):
+        return f"{self.nome} ({self.ocupacao})"
+
+    class Meta:
+        verbose_name = "Pessoa"
+        verbose_name_plural = "Pessoas"
+
+
+class SaudeAnimal(models.Model):
+    animal = models.ForeignKey(Animal, on_delete=models.CASCADE, verbose_name="Animal")
+    vacina = models.CharField(max_length=100, verbose_name="Vacina")
+    data = models.DateField(verbose_name="Data")
+    observacoes = models.TextField(blank=True, verbose_name="Observações")
+
+    def __str__(self):
+        return f"{self.animal.nome} - {self.vacina} ({self.data})"
+
+    class Meta:
+        verbose_name = "Saúde Animal"
+        verbose_name_plural = "Saúde Animal"

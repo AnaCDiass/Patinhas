@@ -20,7 +20,7 @@
           {% for adocao in adocoes %}
             <tr>
               <td>{{ adocao.animal.nome }}</td>
-              <td>{{ adocao.adotante.nome }}</td>
+              <td>{{ adocao.pessoa.nome }}</td>
               <td>{{ adocao.data|date:"d/m/Y" }}</td>
             </tr>
           {% endfor %}

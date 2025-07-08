@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views import View
-from .models import Animal, Campanha, Denuncia, Doacao, Cidade, Endereco
+from .models import Animal, Campanha, Denuncia, Doacao, Cidade, Endereco, Pessoa, Ocupacao, SaudeAnimal
 
 
 class IndexView(View):
@@ -41,3 +41,26 @@ class EnderecosView(View):
     def get(self, request, *args, **kwargs):
         enderecos = Endereco.objects.select_related('cidade').all()
         return render(request, 'enderecos.html', {'enderecos': enderecos})
+
+
+class PessoasView(View):
+    def get(self, request):
+        pessoas = Pessoa.objects.all()
+        return render(request, 'pessoas.html', {'pessoas': pessoas})
+
+
+class OcupacaoView(View):
+    def get(self, request):
+        ocupacoes = Ocupacao.objects.all()
+        return render(request, 'ocupacao.html', {'ocupacoes': ocupacoes})
+
+    def post(self, request):
+        nome = request.POST.get('nome')
+        if nome:
+            Ocupacao.objects.create(nome=nome)
+        return redirect('ocupacao')
+    
+class SaudeAnimalView(View):
+    def get(self, request):
+        registros = SaudeAnimal.objects.all()
+        return render(request, 'saudeanimal.html', {'registros': registros})

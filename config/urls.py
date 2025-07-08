@@ -17,6 +17,9 @@ urlpatterns = [
     path('doacao/', DoacaoView.as_view(), name='doacao'),
     path('cidades/', CidadesView.as_view(), name='cidades'),
     path('enderecos/', EnderecosView.as_view(), name='enderecos'),
+    path('pessoas/', PessoasView.as_view(), name='pessoas'),
+    path('ocupacoes/', OcupacaoView.as_view(), name='ocupacao'),
+    path('saude-animal/', SaudeAnimalView.as_view(), name='saude_animal'),
 
     # Parte privada (se for usar depois)
     # path('painel/', DashboardView.as_view(), name='dashboard'),
