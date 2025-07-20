@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views import View
-from .models import Animal, Campanha, Denuncia, Doacao, Cidade, Endereco, Pessoa, Ocupacao, SaudeAnimal
+from .models import Animal, Campanha, Denuncia, Adocao, Doacao, Cidade, Endereco, Pessoa, Ocupacao, SaudeAnimal
 
 
 class IndexView(View):
@@ -29,13 +29,21 @@ class DenunciaView(View):
 
 class DoacaoView(View):
     def get(self, request, *args, **kwargs):
-        doacoes = Doacao.objects.order_by('-id') 
+        doacoes = Doacao.objects.order_by('-id')
         return render(request, 'doacao.html', {'doacoes': doacoes})
     
+
+class AdocaoView(View):
+    def get(self, request, *args, **kwargs):
+        adocoes = Adocao.objects.select_related('animal', 'pessoa').all().order_by('-data')
+        return render(request, 'adocao.html', {'adocoes': adocoes})
+
+
 class CidadesView(View):
     def get(self, request):
         cidades = Cidade.objects.all()
         return render(request, 'cidades.html', {'cidades': cidades})
+
 
 class EnderecosView(View):
     def get(self, request, *args, **kwargs):

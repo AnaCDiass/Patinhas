@@ -16,7 +16,6 @@
             <th>Telefone</th>
             <th>Valor (R$)</th>
             <th>Forma de Pagamento</th>
-            <th>ONG</th>
             <th>Data</th>
           </tr>
         </thead>
@@ -28,13 +27,6 @@
               <td>{{ doacao.telefone|default:"-" }}</td>
               <td>{{ doacao.valor }}</td>
               <td>{{ doacao.forma_pagamento }}</td>
-              <td>
-                {% if doacao.ong %}
-                  {{ doacao.ong.nome }}
-                {% else %}
-                  Geral
-                {% endif %}
-              </td>
               <td>{{ doacao.data|date:"d/m/Y H:i" }}</td>
             </tr>
           {% endfor %}

@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Registros de Animais | Patinhas{% endblock %}
 
@@ -15,28 +16,37 @@
 
   <div class="row">
     {% for animal in animais %}
-      <div class="col-md-4 mb-4">
-        <div class="card shadow-sm">
-          {% if animal.imagem %}
-            <img src="{{ animal.imagem.url }}" alt="Foto de {{ animal.nome }}" class="card-img-top" />
+    <div class="col-md-4 mb-4">
+      <div class="card shadow-sm rounded-3">
+
+        <!-- Imagem com margem leve e bordas arredondadas -->
+        <div class="p-2">
+          {% if animal.foto %}
+            <img src="{{ animal.foto.url }}" alt="Foto de {{ animal.nome }}"
+              class="img-fluid rounded" style="height: 220px; width: 100%; object-fit: cover;">
+          {% else %}
+            <img src="{% static 'imagens/padrao.jpg' %}" alt="Foto padrão"
+              class="img-fluid rounded" style="height: 220px; width: 100%; object-fit: cover;">
           {% endif %}
-          <div class="card-body text-center">
-            <h5 class="card-title">{{ animal.nome }}</h5>
-            <p class="card-text">
-              <strong>Espécie:</strong> {{ animal.especie }}<br>
-              <strong>Raça:</strong> {{ animal.raca }}<br>
-              <strong>Idade:</strong> {{ animal.idade }}<br>
-              <strong>Sexo:</strong> {{ animal.sexo }}<br>
-              <strong>Status:</strong> 
-              <span class="{% if animal.status == 'Disponível' %}text-success{% else %}text-secondary{% endif %}">
-                {{ animal.status }}
-              </span>
-            </p>
-          </div>
+        </div>
+
+        <div class="card-body text-center">
+          <h5 class="card-title">{{ animal.nome }}</h5>
+          <p class="card-text">
+            <strong>Espécie:</strong> {{ animal.especie }}<br>
+            <strong>Raça:</strong> {{ animal.raca }}<br>
+            <strong>Idade:</strong> {{ animal.idade }}<br>
+            <strong>Sexo:</strong> {{ animal.sexo }}<br>
+            <strong>Status:</strong>
+            <span class="{% if animal.status == 'Disponível' %}text-success{% else %}text-secondary{% endif %}">
+              {{ animal.status }}
+            </span>
+          </p>
         </div>
       </div>
+    </div>
     {% empty %}
-      <p class="text-center w-100">Nenhum registro de animal foi encontrado no momento.</p>
+    <p class="text-center w-100">Nenhum registro de animal foi encontrado no momento.</p>
     {% endfor %}
   </div>
 </div>

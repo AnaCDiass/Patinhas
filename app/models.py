@@ -32,6 +32,7 @@ class Animal(models.Model):
     raca = models.CharField(max_length=50, verbose_name="Raça")
     idade = models.IntegerField(verbose_name="Idade (em anos)")
     sexo = models.CharField(max_length=10, verbose_name="Sexo")
+    foto = models.ImageField(upload_to='fotos_animais/', blank=True, null=True)
     status = models.CharField(
         max_length=20,
         choices=[('Disponível', 'Disponível'), ('Adotado', 'Adotado')],
@@ -61,15 +62,12 @@ class Adocao(models.Model):
 
 
 class Doacao(models.Model):
-    nome_doador = models.CharField(max_length=100, verbose_name="Nome do doador", blank=True, null=True)
+    pessoa = models.ForeignKey('Pessoa', on_delete=models.CASCADE, verbose_name="Doador", null=True, blank=True)
     email = models.EmailField(verbose_name="Email", blank=True, null=True)
     telefone = models.CharField(max_length=15, verbose_name="Telefone", blank=True, null=True)
     valor = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Valor")
     forma_pagamento = models.CharField(max_length=50, verbose_name="Forma de pagamento")
     data = models.DateTimeField(auto_now_add=True, verbose_name="Data da doação")
-
-    def __str__(self):
-        return f"R${self.valor:.2f} - {self.forma_pagamento}"
 
 
 class Campanha(models.Model):
@@ -87,15 +85,12 @@ class Campanha(models.Model):
 
 
 class Denuncia(models.Model):
-    nome_denunciante = models.CharField(max_length=100, verbose_name="Nome do denunciante")
+    pessoa = models.ForeignKey('Pessoa', on_delete=models.CASCADE, verbose_name="Denunciante", null=True, blank=True)
     email = models.EmailField(verbose_name="Email", blank=True, null=True)
     telefone = models.CharField(max_length=15, verbose_name="Telefone", blank=True, null=True)
     descricao = models.TextField(verbose_name="Descrição da denúncia")
     data = models.DateField(auto_now_add=True, verbose_name="Data da denúncia")
     endereco = models.ForeignKey(Endereco, on_delete=models.SET_NULL, blank=True, null=True, verbose_name="Endereço")
-
-    def __str__(self):
-        return f"Denúncia de {self.nome_denunciante} em {self.data}"
 
 
 class SaudeAnimal(models.Model):
@@ -108,8 +103,9 @@ class SaudeAnimal(models.Model):
         return f"Saúde de {self.animal} - {self.data}"
 
     class Meta:
-        verbose_name = "Ficha de Saúde"
-        verbose_name_plural = "Fichas de Saúde"
+        verbose_name = "Saúde Animal"
+        verbose_name_plural = "Saúde Animal"
+
 
 
 class Ocupacao(models.Model):
@@ -133,21 +129,3 @@ class Pessoa(models.Model):
 
     def __str__(self):
         return f"{self.nome} ({self.ocupacao})"
-
-    class Meta:
-        verbose_name = "Pessoa"
-        verbose_name_plural = "Pessoas"
-
-
-class SaudeAnimal(models.Model):
-    animal = models.ForeignKey(Animal, on_delete=models.CASCADE, verbose_name="Animal")
-    vacina = models.CharField(max_length=100, verbose_name="Vacina")
-    data = models.DateField(verbose_name="Data")
-    observacoes = models.TextField(blank=True, verbose_name="Observações")
-
-    def __str__(self):
-        return f"{self.animal.nome} - {self.vacina} ({self.data})"
-
-    class Meta:
-        verbose_name = "Saúde Animal"
-        verbose_name_plural = "Saúde Animal"

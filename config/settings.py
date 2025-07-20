@@ -94,8 +94,11 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Melhor para produção
 # Configuração padrão do ID automático
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Faz a sessão expirar quando fechar o navegador
-SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+# Comentado para não expirar a sessão ao fechar o navegador
+# SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
-# Define a duração máxima da sessão em segundos (exemplo: 5 minutos)
-SESSION_COOKIE_AGE = 300
+# Comentado para usar o padrão Django (2 semanas)
+# SESSION_COOKIE_AGE = 300
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

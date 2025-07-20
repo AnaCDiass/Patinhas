@@ -15,6 +15,7 @@ urlpatterns = [
     path('campanhas/', CampanhasView.as_view(), name='campanhas'),
     path('denuncias/', DenunciaView.as_view(), name='denuncias'),
     path('doacao/', DoacaoView.as_view(), name='doacao'),
+    path('adocao/', AdocaoView.as_view(), name='adocao'),
     path('cidades/', CidadesView.as_view(), name='cidades'),
     path('enderecos/', EnderecosView.as_view(), name='enderecos'),
     path('pessoas/', PessoasView.as_view(), name='pessoas'),
@@ -26,4 +27,11 @@ urlpatterns = [
     # path('animal/novo/', CadastroAnimalView.as_view(), name='cadastro_animal'),
     # path('campanha/nova/', CadastroCampanhaView.as_view(), name='cadastro_campanha'),
 ]
+
+from django.conf import settings
+from django.conf.urls.static import static
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
 
