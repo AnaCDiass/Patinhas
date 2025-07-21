@@ -22,9 +22,9 @@
         <tbody>
           {% for denuncia in denuncias %}
             <tr>
-              <td>{{ denuncia.nome_denunciante }}</td>
-              <td>{{ denuncia.email|default:"-" }}</td>
-              <td>{{ denuncia.telefone|default:"-" }}</td>
+              <td>{{ denuncia.pessoa.nome }}</td>
+              <td>{{ denuncia.pessoa.email|default:"-" }}</td>
+              <td>{{ denuncia.pessoa.telefone|default:"-" }}</td>
               <td class="text-start">{{ denuncia.descricao }}</td>
               <td style="max-width: 250px; word-wrap: break-word; white-space: normal;">
                 {% if denuncia.endereco %}

@@ -60,14 +60,18 @@ class Adocao(models.Model):
         verbose_name = "Adoção"
         verbose_name_plural = "Adoções"
 
-
 class Doacao(models.Model):
-    pessoa = models.ForeignKey('Pessoa', on_delete=models.CASCADE, verbose_name="Doador", null=True, blank=True)
-    email = models.EmailField(verbose_name="Email", blank=True, null=True)
-    telefone = models.CharField(max_length=15, verbose_name="Telefone", blank=True, null=True)
+    pessoa = models.ForeignKey('Pessoa', on_delete=models.CASCADE, verbose_name="Doador")
     valor = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Valor")
     forma_pagamento = models.CharField(max_length=50, verbose_name="Forma de pagamento")
     data = models.DateTimeField(auto_now_add=True, verbose_name="Data da doação")
+
+    def __str__(self):
+        return f"Doação de {self.valor} feita por {self.pessoa.nome} em {self.data.strftime('%d/%m/%Y')}"
+
+    class Meta:
+        verbose_name = "Doação"
+        verbose_name_plural = "Doações"
 
 
 class Campanha(models.Model):
@@ -85,12 +89,18 @@ class Campanha(models.Model):
 
 
 class Denuncia(models.Model):
-    pessoa = models.ForeignKey('Pessoa', on_delete=models.CASCADE, verbose_name="Denunciante", null=True, blank=True)
-    email = models.EmailField(verbose_name="Email", blank=True, null=True)
-    telefone = models.CharField(max_length=15, verbose_name="Telefone", blank=True, null=True)
-    descricao = models.TextField(verbose_name="Descrição da denúncia")
-    data = models.DateField(auto_now_add=True, verbose_name="Data da denúncia")
-    endereco = models.ForeignKey(Endereco, on_delete=models.SET_NULL, blank=True, null=True, verbose_name="Endereço")
+    pessoa = models.ForeignKey('Pessoa', on_delete=models.CASCADE, verbose_name="Denunciante")
+    descricao = models.TextField(verbose_name="Descrição")
+    endereco = models.ForeignKey(Endereco, on_delete=models.CASCADE, verbose_name="Endereço")
+    data = models.DateField(auto_now_add=True, verbose_name="Data")
+
+    def __str__(self):
+        return f"Denúncia feita por {self.pessoa.nome} em {self.data}"
+
+    class Meta:
+        verbose_name = "Denúncia"
+        verbose_name_plural = "Denúncias"
+
 
 
 class SaudeAnimal(models.Model):

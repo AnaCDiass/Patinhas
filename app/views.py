@@ -10,8 +10,7 @@ class IndexView(View):
 
 class AnimaisView(View):
     def get(self, request, *args, **kwargs):
-        # Filtra animais com status 'Disponível'
-        animais = Animal.objects.filter(status='Disponível')
+        animais = Animal.objects.all()
         return render(request, 'animais.html', {'animais': animais})
 
 
